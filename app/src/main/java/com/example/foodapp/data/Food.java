@@ -1,7 +1,10 @@
 package com.example.foodapp.data;
 
-public class Food {
-    private final String id;
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class Food implements Parcelable {
+    private final String ID;
     private final String name;
     private final int size;
     private final int cost;
@@ -9,7 +12,7 @@ public class Food {
     private final Auxdata auxdata;
 
     public Food(String id, String name, int size, int cost, String category, Auxdata auxdata) {
-        this.id = id;
+        this.ID = id;
         this.name = name;
         this.size = size;
         this.cost = cost;
@@ -17,8 +20,29 @@ public class Food {
         this.auxdata = auxdata;
     }
 
-    public String getId() {
-        return id;
+    protected Food(Parcel in) {
+        ID = in.readString();
+        name = in.readString();
+        size = in.readInt();
+        cost = in.readInt();
+        category = in.readString();
+        auxdata = in.readParcelable(Auxdata.class.getClassLoader());
+    }
+
+    public static final Creator<Food> CREATOR = new Creator<Food>() {
+        @Override
+        public Food createFromParcel(Parcel in) {
+            return new Food(in);
+        }
+
+        @Override
+        public Food[] newArray(int size) {
+            return new Food[size];
+        }
+    };
+
+    public String getID() {
+        return ID;
     }
 
     public String getName() {
@@ -41,4 +65,18 @@ public class Food {
         return auxdata;
     }
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(ID);
+        parcel.writeString(name);
+        parcel.writeInt(size);
+        parcel.writeInt(cost);
+        parcel.writeString(category);
+        parcel.writeParcelable(auxdata, i);
+    }
 }

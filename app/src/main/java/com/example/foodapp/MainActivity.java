@@ -9,14 +9,21 @@ import androidx.navigation.ui.NavigationUI;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 import android.widget.Toolbar;
 
+import com.example.foodapp.data.Food;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
-public class MainActivity extends AppCompatActivity implements JsonTask.JsonTaskListener{
+import java.lang.reflect.Type;
+import java.util.List;
+
+public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,10 +49,5 @@ public class MainActivity extends AppCompatActivity implements JsonTask.JsonTask
         startActivity(intent);
 
         return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    public void onPostExecute(String json) {
-
     }
 }
