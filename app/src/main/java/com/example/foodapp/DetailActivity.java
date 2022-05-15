@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -24,8 +25,6 @@ import java.util.List;
 public class DetailActivity extends AppCompatActivity {
 
     private List<Food> favorites = new ArrayList<>();
-    private SharedPreferences ref;
-    private SharedPreferences.Editor editor;
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
@@ -35,12 +34,15 @@ public class DetailActivity extends AppCompatActivity {
 
         Food food = getIntent().getParcelableExtra("food");
 
-        getSupportActionBar().setTitle(food.getName());
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setTitle(food.getName());
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
 
-        ref = getSharedPreferences("Favorites", MODE_PRIVATE);
-        editor = ref.edit();
+        SharedPreferences ref = getSharedPreferences("Favorites", MODE_PRIVATE);
+        SharedPreferences.Editor editor = ref.edit();
 
+        // Grab the views
         TextView name = findViewById(R.id.detail_name);
         TextView price = findViewById(R.id.detail_price);
         TextView description = findViewById(R.id.detail_description);
@@ -48,6 +50,7 @@ public class DetailActivity extends AppCompatActivity {
         Button addToCart = findViewById(R.id.add_to_cart);
         ImageButton addToFavorites = findViewById(R.id.add_to_favorites);
 
+        // Retrieve the favorites
         String list = ref.getString("FavoritesList", null);
         Gson gson = new Gson();
         Type type = new TypeToken<List<Food>>() {}.getType();
@@ -86,5 +89,14 @@ public class DetailActivity extends AppCompatActivity {
 
         if (!url.isEmpty())
             Picasso.get().load(url).into(image);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            finish();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
