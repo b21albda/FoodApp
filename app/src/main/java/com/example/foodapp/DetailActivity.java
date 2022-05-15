@@ -62,6 +62,7 @@ public class DetailActivity extends AppCompatActivity {
         });
 
         addToFavorites.setOnClickListener(View -> {
+            // Check if the item already exist in the favorites
             if (favorites.stream().anyMatch(o -> food.getID().equals(o.getID()))) {
                 favorites.removeIf(o -> food.getID().equals(o.getID()));
                 addToFavorites.setImageResource(R.drawable.ic_favorites);
@@ -70,6 +71,7 @@ public class DetailActivity extends AppCompatActivity {
                 addToFavorites.setImageResource(R.drawable.ic_favorites_fill);
             }
 
+            // Add the favorites list to the shared preferences in the form of a json string
             String json = gson.toJson(favorites);
             Log.d("TAG", json);
             editor.putString("FavoritesList", json);
@@ -81,6 +83,7 @@ public class DetailActivity extends AppCompatActivity {
         description.setText(food.getAuxdata().getDescription());
 
         String url = food.getAuxdata().getImg();
+
         if (!url.isEmpty())
             Picasso.get().load(url).into(image);
     }
