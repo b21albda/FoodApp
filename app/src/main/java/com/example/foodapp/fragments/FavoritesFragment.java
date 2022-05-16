@@ -1,9 +1,6 @@
 package com.example.foodapp.fragments;
 
-import static android.content.Context.MODE_PRIVATE;
-
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -15,16 +12,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.example.foodapp.DetailActivity;
+import com.example.foodapp.activities.DetailActivity;
 import com.example.foodapp.R;
 import com.example.foodapp.SelectListener;
 import com.example.foodapp.adapters.FoodAdapter;
 import com.example.foodapp.data.Food;
 import com.example.foodapp.database.DatabaseHelper;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 

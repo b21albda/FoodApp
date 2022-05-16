@@ -57,9 +57,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     /**
-     * Get all the entries in the database
+     * Get all the records in the database
      *
-     * @return The list of entries
+     * @return The list of records
      */
     public List<Food> getAll() {
         SQLiteDatabase db = getReadableDatabase();
@@ -108,6 +108,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return exists;
     }
 
+    /**
+     * Delete a record from the database
+     *
+     * @param id The id of the record to be deleted
+     */
     public void delete(String id) {
         SQLiteDatabase db = getWritableDatabase();
 

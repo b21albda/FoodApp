@@ -1,4 +1,4 @@
-package com.example.foodapp;
+package com.example.foodapp.activities;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
@@ -13,6 +13,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.foodapp.R;
 import com.example.foodapp.data.Food;
 import com.example.foodapp.database.DatabaseHelper;
 import com.google.gson.Gson;
