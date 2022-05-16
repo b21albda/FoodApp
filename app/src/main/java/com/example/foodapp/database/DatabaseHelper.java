@@ -2,6 +2,7 @@ package com.example.foodapp.database;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
@@ -9,6 +10,9 @@ import androidx.annotation.Nullable;
 
 import com.example.foodapp.data.Auxdata;
 import com.example.foodapp.data.Food;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
     private static final int DB_VERSION = 1;
@@ -39,6 +43,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
         Auxdata auxdata = food.getAuxdata();
 
+
+        values.put(DatabaseTables.FAVORITES.COLUMN_NAME_ID, food.getID());
         values.put(DatabaseTables.FAVORITES.COLUMN_NAME_NAME, food.getName());
         values.put(DatabaseTables.FAVORITES.COLUMN_NAME_SIZE, food.getSize());
         values.put(DatabaseTables.FAVORITES.COLUMN_NAME_COST, food.getCost());
@@ -48,5 +54,38 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(DatabaseTables.FAVORITES.COLUMN_NAME_TYPE, auxdata.getType());
 
         db.insert(DatabaseTables.FAVORITES.TABLE_NAME, null, values);
+    }
+
+    /**
+     * Get all the entries in the database
+     *
+     * @return The list of entries
+     */
+    public List<Food> getAll() {
+        SQLiteDatabase db = getReadableDatabase();
+
+        Cursor cursor = db.query(DatabaseTables.FAVORITES.TABLE_NAME, null, null, null, null, null, null);
+        List<Food> favorites = new ArrayList<>();
+
+        while (cursor.moveToNext()) {
+            Auxdata auxdata = new Auxdata(
+                    cursor.getString(cursor.getColumnIndexOrThrow(DatabaseTables.FAVORITES.COLUMN_NAME_DESCRIPTION)),
+                    cursor.getString(cursor.getColumnIndexOrThrow(DatabaseTables.FAVORITES.COLUMN_NAME_IMG)),
+                    cursor.getString(cursor.getColumnIndexOrThrow(DatabaseTables.FAVORITES.COLUMN_NAME_TYPE))
+            );
+
+            Food food = new Food(
+                    cursor.getLong(cursor.getColumnIndexOrThrow(DatabaseTables.FAVORITES.COLUMN_NAME_ID)),
+                    cursor.getString(cursor.getColumnIndexOrThrow(DatabaseTables.FAVORITES.COLUMN_NAME_ID)),
+                    cursor.getString(cursor.getColumnIndexOrThrow(DatabaseTables.FAVORITES.COLUMN_NAME_NAME)),
+                    cursor.getInt(cursor.getColumnIndexOrThrow(DatabaseTables.FAVORITES.COLUMN_NAME_SIZE)),
+                    cursor.getInt(cursor.getColumnIndexOrThrow(DatabaseTables.FAVORITES.COLUMN_NAME_COST)),
+                    cursor.getString(cursor.getColumnIndexOrThrow(DatabaseTables.FAVORITES.COLUMN_NAME_CATEGORY)),
+                    auxdata
+            );
+            favorites.add(food);
+        }
+        cursor.close();
+        return favorites;
     }
 }

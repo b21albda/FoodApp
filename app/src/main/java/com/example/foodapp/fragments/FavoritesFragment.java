@@ -20,6 +20,7 @@ import com.example.foodapp.R;
 import com.example.foodapp.SelectListener;
 import com.example.foodapp.adapters.FoodAdapter;
 import com.example.foodapp.data.Food;
+import com.example.foodapp.database.DatabaseHelper;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -51,7 +52,9 @@ public class FavoritesFragment extends Fragment implements SelectListener {
         String list = ref.getString("FavoritesList", null);
         Gson gson = new Gson();
         Type type = new TypeToken<List<Food>>() {}.getType();
-        favorites = gson.fromJson(list, type);
+//        favorites = gson.fromJson(list, type);
+        DatabaseHelper helper = new DatabaseHelper(this.getContext());
+        favorites = helper.getAll();
 
 
         recyclerView = view.findViewById(R.id.favorites_recyclerView);
@@ -71,7 +74,9 @@ public class FavoritesFragment extends Fragment implements SelectListener {
         String list = ref.getString("FavoritesList", null);
         Gson gson = new Gson();
         Type type = new TypeToken<List<Food>>() {}.getType();
-        favorites = gson.fromJson(list, type);
+//        favorites = gson.fromJson(list, type);
+        DatabaseHelper helper = new DatabaseHelper(this.getContext());
+        favorites = helper.getAll();
         adapter.setFoods(favorites);
         adapter.notifyDataSetChanged();
 

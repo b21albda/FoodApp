@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.foodapp.data.Food;
+import com.example.foodapp.database.DatabaseHelper;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.squareup.picasso.Picasso;
@@ -57,28 +58,31 @@ public class DetailActivity extends AppCompatActivity {
         favorites = gson.fromJson(list, type);
 
         // Check if item exist in favorites then change the "addToFavorites" button image
-        if (favorites.stream().anyMatch(o -> food.getID().equals(o.getID())))
-            addToFavorites.setImageResource(R.drawable.ic_favorites_fill);
+//        if (favorites.stream().anyMatch(o -> food.getID().equals(o.getID())))
+//            addToFavorites.setImageResource(R.drawable.ic_favorites_fill);
 
         addToCart.setOnClickListener(View -> {
             // Todo Implement add to cart
         });
 
         addToFavorites.setOnClickListener(View -> {
+            DatabaseHelper helper = new DatabaseHelper(this);
+            helper.insert(food);
+
             // Check if the item already exist in the favorites
-            if (favorites.stream().anyMatch(o -> food.getID().equals(o.getID()))) {
-                favorites.removeIf(o -> food.getID().equals(o.getID()));
-                addToFavorites.setImageResource(R.drawable.ic_favorites);
-            } else {
-                favorites.add(food);
-                addToFavorites.setImageResource(R.drawable.ic_favorites_fill);
-            }
+//            if (favorites.stream().anyMatch(o -> food.getID().equals(o.getID()))) {
+//                favorites.removeIf(o -> food.getID().equals(o.getID()));
+//                addToFavorites.setImageResource(R.drawable.ic_favorites);
+//            } else {
+//                favorites.add(food);
+//                addToFavorites.setImageResource(R.drawable.ic_favorites_fill);
+//            }
 
             // Add the favorites list to the shared preferences in the form of a json string
-            String json = gson.toJson(favorites);
-            Log.d("TAG", json);
-            editor.putString("FavoritesList", json);
-            editor.apply();
+//            String json = gson.toJson(favorites);
+//            Log.d("TAG", json);
+//            editor.putString("FavoritesList", json);
+//            editor.apply();
         });
 
         name.setText(food.getName());
