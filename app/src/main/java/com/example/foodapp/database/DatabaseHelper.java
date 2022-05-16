@@ -75,7 +75,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             );
 
             Food food = new Food(
-                    cursor.getLong(cursor.getColumnIndexOrThrow(DatabaseTables.FAVORITES.COLUMN_NAME_ID)),
                     cursor.getString(cursor.getColumnIndexOrThrow(DatabaseTables.FAVORITES.COLUMN_NAME_ID)),
                     cursor.getString(cursor.getColumnIndexOrThrow(DatabaseTables.FAVORITES.COLUMN_NAME_NAME)),
                     cursor.getInt(cursor.getColumnIndexOrThrow(DatabaseTables.FAVORITES.COLUMN_NAME_SIZE)),
@@ -87,5 +86,34 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
         cursor.close();
         return favorites;
+    }
+
+    /**
+     * Check if the database contains a record with a specific id
+     *
+     * @param id The id
+     * @return If the record exists
+     */
+    public boolean exists(String id) {
+        SQLiteDatabase db = getReadableDatabase();
+
+        String[] columns = {DatabaseTables.FAVORITES.COLUMN_NAME_ID};
+        String selection = DatabaseTables.FAVORITES.COLUMN_NAME_ID + " =?";
+        String[] selectionArgs = { id };
+        String limit = "1";
+
+        Cursor cursor = db.query(DatabaseTables.FAVORITES.TABLE_NAME, columns, selection, selectionArgs, null, null, null, limit);
+        boolean exists = (cursor.getCount() > 0);
+        cursor.close();
+        return exists;
+    }
+
+    public void delete(String id) {
+        SQLiteDatabase db = getWritableDatabase();
+
+        String selection = DatabaseTables.FAVORITES.COLUMN_NAME_ID + " LIKE ?";
+        String[] selectionArgs = {id};
+
+        db.delete(DatabaseTables.FAVORITES.TABLE_NAME, selection, selectionArgs);
     }
 }

@@ -3,6 +3,8 @@ package com.example.foodapp.data;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import androidx.annotation.Nullable;
+
 public class Food implements Parcelable {
     private final String ID;
     private final String name;
