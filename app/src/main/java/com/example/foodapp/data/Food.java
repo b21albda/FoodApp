@@ -5,6 +5,8 @@ import android.os.Parcelable;
 
 import androidx.annotation.Nullable;
 
+import java.util.Comparator;
+
 public class Food implements Parcelable {
     private final String ID;
     private final String name;

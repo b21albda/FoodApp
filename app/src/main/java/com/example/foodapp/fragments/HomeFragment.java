@@ -1,6 +1,8 @@
 package com.example.foodapp.fragments;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -34,34 +36,63 @@ public class HomeFragment extends Fragment implements JsonTask.JsonTaskListener,
     private RecyclerView recyclerView;
     private List<Food> foods = new ArrayList<>();
     private FoodAdapter adapter;
+    private SharedPreferences pref;
+    private AutoCompleteTextView sortBox;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
-        AutoCompleteTextView sortBox = view.findViewById(R.id.sort_box);
-        String[] t = {"Sort by", "Beverage", "Food", "Wine", "Beer", "Meat"};
-        ArrayAdapter test = new ArrayAdapter(this.getContext(), R.layout.dropdown_item, t);
-        sortBox.setAdapter(test);
+        pref = getActivity().getSharedPreferences("sort", Context.MODE_PRIVATE);
+
+        sortBox = view.findViewById(R.id.sort_box);
+        String sort = pref.getString("type", null);
+        if (sort != null) {
+            sortBox.setText(sort);
+        }
+        String[] options = getResources().getStringArray(R.array.sort_options);
+        ArrayAdapter arrayAdapter = new ArrayAdapter(this.getContext(), R.layout.dropdown_item, options);
+        sortBox.setAdapter(arrayAdapter);
         sortBox.setOnItemClickListener((adapterView, view1, i, l) -> {
             TextView tv = view1.findViewById(R.id.tv_option);
             sortBy(tv.getText().toString());
         });
+
+
 
         recyclerView = view.findViewById(R.id.home_recyclerView);
         adapter = new FoodAdapter(foods, this);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
+
         new JsonTask(this).execute("https://mobprog.webug.se/json-api?login=b21albda");
+
+
         // Inflate the layout for this fragment
         return view;
     }
 
-    private void sortBy(String sortBy) {
-        Log.d("TAG", "sortBy: " + sortBy);
+    private void sortBy(String sort) {
+        Log.d("TAG", "sortBy: " + sort);
+        SharedPreferences.Editor editor = pref.edit();
 
+        editor.putString("type", sort);
+        editor.apply();
+
+        List<Food> sorted = new ArrayList<>();
+        if (sort.equals("Sort by")){
+            sorted = foods;
+        } else {
+            for (Food food : foods) {
+                if (food.getCategory().equals(sort))
+                    sorted.add(food);
+            }
+        }
+
+        adapter.setFoods(sorted);
+        adapter.notifyDataSetChanged();
     }
 
     @Override
@@ -71,6 +102,11 @@ public class HomeFragment extends Fragment implements JsonTask.JsonTaskListener,
         foods = gson.fromJson(json, type);
         adapter.setFoods(foods);
         adapter.notifyDataSetChanged();
+        // Get the saved sort type and apply it
+        String sort = pref.getString("type", null);
+        if (sort != null) {
+            sortBy(sort);
+        }
     }
 
     @Override
