@@ -14,11 +14,11 @@ import com.example.foodapp.data.Food;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DatabaseHelper extends SQLiteOpenHelper {
+public class FavoritesHelper extends SQLiteOpenHelper {
     private static final int DB_VERSION = 1;
     private static final String DB_NAME = "Favorites.db";
 
-    public DatabaseHelper(@Nullable Context context) {
+    public FavoritesHelper(@Nullable Context context) {
         super(context, DB_NAME, null, DB_VERSION);
     }
 

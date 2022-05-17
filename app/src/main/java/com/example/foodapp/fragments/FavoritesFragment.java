@@ -17,7 +17,7 @@ import com.example.foodapp.R;
 import com.example.foodapp.SelectListener;
 import com.example.foodapp.adapters.FoodAdapter;
 import com.example.foodapp.data.Food;
-import com.example.foodapp.database.DatabaseHelper;
+import com.example.foodapp.database.FavoritesHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,7 +37,7 @@ public class FavoritesFragment extends Fragment implements SelectListener {
 
         tv_info = view.findViewById(R.id.tv_info);
 
-        DatabaseHelper helper = new DatabaseHelper(this.getContext());
+        FavoritesHelper helper = new FavoritesHelper(this.getContext());
         favorites = helper.getAll();
 
         recyclerView = view.findViewById(R.id.favorites_recyclerView);
@@ -54,7 +54,7 @@ public class FavoritesFragment extends Fragment implements SelectListener {
 
     @Override
     public void onResume() {
-        DatabaseHelper helper = new DatabaseHelper(this.getContext());
+        FavoritesHelper helper = new FavoritesHelper(this.getContext());
         favorites = helper.getAll();
         adapter.setFoods(favorites);
         adapter.notifyDataSetChanged();

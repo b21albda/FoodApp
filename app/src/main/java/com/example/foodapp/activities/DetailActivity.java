@@ -1,28 +1,19 @@
 package com.example.foodapp.activities;
 
-import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.content.SharedPreferences;
-import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.foodapp.R;
 import com.example.foodapp.data.Food;
-import com.example.foodapp.database.DatabaseHelper;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
+import com.example.foodapp.database.CartHelper;
+import com.example.foodapp.database.FavoritesHelper;
 import com.squareup.picasso.Picasso;
-
-import java.lang.reflect.Type;
-import java.util.ArrayList;
-import java.util.List;
 
 public class DetailActivity extends AppCompatActivity {
 
@@ -46,13 +37,15 @@ public class DetailActivity extends AppCompatActivity {
         Button addToCart = findViewById(R.id.add_to_cart);
         ImageButton addToFavorites = findViewById(R.id.add_to_favorites);
 
-        DatabaseHelper helper = new DatabaseHelper(this);
+        FavoritesHelper helper = new FavoritesHelper(this);
         // Check if item exist in favorites then change the "addToFavorites" button image
         if (helper.exists(food.getID()))
             addToFavorites.setImageResource(R.drawable.ic_favorites_fill);
 
         addToCart.setOnClickListener(View -> {
-            // Todo Implement add to cart
+            CartHelper cartHelper = new CartHelper(this);
+
+            cartHelper.insert(food);
         });
 
         addToFavorites.setOnClickListener(View -> {
