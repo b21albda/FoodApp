@@ -9,7 +9,8 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/cart_recyclerView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:layout_marginBottom="40dp"/>
 
     <TextView
         android:id="@+id/tv_info_cart"
@@ -22,6 +23,7 @@
         android:id="@+id/checkoutBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/white"
         android:layout_gravity="bottom">
         <TextView
             android:id="@+id/tv_total"

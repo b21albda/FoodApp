@@ -12,6 +12,7 @@ public class Food implements Parcelable {
     private final int cost;
     private final String category;
     private final Auxdata auxdata;
+    private long dbId;
 
     public Food(String id, String name, int size, int cost, String category, Auxdata auxdata) {
         this.ID = id;
@@ -20,6 +21,16 @@ public class Food implements Parcelable {
         this.cost = cost;
         this.category = category;
         this.auxdata = auxdata;
+    }
+
+    public Food(String id, String name, int size, int cost, String category, Auxdata auxdata, long dbId) {
+        this.ID = id;
+        this.name = name;
+        this.size = size;
+        this.cost = cost;
+        this.category = category;
+        this.auxdata = auxdata;
+        this.dbId = dbId;
     }
 
     protected Food(Parcel in) {
@@ -80,5 +91,9 @@ public class Food implements Parcelable {
         parcel.writeInt(cost);
         parcel.writeString(category);
         parcel.writeParcelable(auxdata, i);
+    }
+
+    public long getDbId() {
+        return dbId;
     }
 }
