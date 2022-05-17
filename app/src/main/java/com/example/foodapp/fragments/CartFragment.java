@@ -1,5 +1,6 @@
 package com.example.foodapp.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -13,6 +14,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.foodapp.R;
+import com.example.foodapp.activities.OrderPlacedActivity;
 import com.example.foodapp.adapters.CartAdapter;
 import com.example.foodapp.data.Food;
 import com.example.foodapp.database.CartHelper;
@@ -53,10 +55,25 @@ public class CartFragment extends Fragment implements CartAdapter.itemDeleteList
         tv_total.setText("Total: " + cartHelper.getTotal() + " Kr");
 
         btn.setOnClickListener(View -> {
-            // Todo Clear cart and display order placed
+            if (cartHelper.getCount() > 0) {
+                cartHelper.clear();
+
+                Intent intent = new Intent(this.getContext(), OrderPlacedActivity.class);
+                startActivity(intent);
+            }
         });
 
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        cartList = cartHelper.getAll();
+        adapter.setFoods(cartList);
+        adapter.notifyDataSetChanged();
+        onItemDelete(cartHelper.getTotal());
+
+        super.onResume();
     }
 
     @Override

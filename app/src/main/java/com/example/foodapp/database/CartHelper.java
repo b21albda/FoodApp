@@ -159,4 +159,10 @@ public class CartHelper extends SQLiteOpenHelper {
 
         return amount;
     }
+
+    public void clear() {
+        SQLiteDatabase db = getWritableDatabase();
+
+        db.delete(DatabaseTables.CART.TABLE_NAME, null, null);
+    }
 }
