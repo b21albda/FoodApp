@@ -24,7 +24,6 @@ import java.util.List;
 public class CartFragment extends Fragment implements CartAdapter.itemDeleteListener {
 
     private List<Food> cartList;
-    private RecyclerView recyclerView;
     private CartAdapter adapter;
     private TextView tv_total;
     private CartHelper cartHelper;
@@ -42,7 +41,7 @@ public class CartFragment extends Fragment implements CartAdapter.itemDeleteList
             tv_info.setText("Cart Empty");
         }
 
-        recyclerView = view.findViewById(R.id.cart_recyclerView);
+        RecyclerView recyclerView = view.findViewById(R.id.cart_recyclerView);
         cartList = cartHelper.getAll();
         adapter = new CartAdapter(this, cartHelper);
         adapter.setFoods(cartList);

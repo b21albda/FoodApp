@@ -18,7 +18,7 @@ import java.util.List;
 
 public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.ViewHolder> {
     private List<Food> foods;
-    private SelectListener listener;
+    private final SelectListener listener;
 
     public FoodAdapter(List<Food> foods, SelectListener listener) {
         this.foods = foods;
@@ -40,9 +40,7 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.ViewHolder> {
         if (!url.isEmpty())
             Picasso.get().load(url).into(holder.iv_image);
 
-        holder.itemView.setOnClickListener(View -> {
-            listener.onItemClicked(food);
-        });
+        holder.itemView.setOnClickListener(View -> listener.onItemClicked(food));
     }
 
     @Override

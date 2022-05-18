@@ -4,24 +4,22 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
+import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
-import android.widget.TextView;
-
-import com.example.foodapp.activities.DetailActivity;
 import com.example.foodapp.JsonTask;
 import com.example.foodapp.R;
 import com.example.foodapp.SelectListener;
+import com.example.foodapp.activities.DetailActivity;
 import com.example.foodapp.adapters.FoodAdapter;
 import com.example.foodapp.data.Food;
 import com.google.gson.Gson;
@@ -33,7 +31,6 @@ import java.util.List;
 
 public class HomeFragment extends Fragment implements JsonTask.JsonTaskListener, SelectListener {
 
-    private RecyclerView recyclerView;
     private List<Food> foods = new ArrayList<>();
     private FoodAdapter adapter;
     private SharedPreferences pref;
@@ -51,24 +48,18 @@ public class HomeFragment extends Fragment implements JsonTask.JsonTaskListener,
         if (sort != null) {
             sortBox.setText(sort);
         }
-        String[] options = getResources().getStringArray(R.array.sort_options);
-        ArrayAdapter arrayAdapter = new ArrayAdapter(this.getContext(), R.layout.dropdown_item, options);
-        sortBox.setAdapter(arrayAdapter);
+
         sortBox.setOnItemClickListener((adapterView, view1, i, l) -> {
             TextView tv = view1.findViewById(R.id.tv_option);
             sortBy(tv.getText().toString());
         });
 
-
-
-        recyclerView = view.findViewById(R.id.home_recyclerView);
+        RecyclerView recyclerView = view.findViewById(R.id.home_recyclerView);
         adapter = new FoodAdapter(foods, this);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-
         new JsonTask(this).execute("https://mobprog.webug.se/json-api?login=b21albda");
-
 
         // Inflate the layout for this fragment
         return view;
@@ -86,7 +77,7 @@ public class HomeFragment extends Fragment implements JsonTask.JsonTaskListener,
             sorted = foods;
         } else {
             for (Food food : foods) {
-                if (food.getCategory().equals(sort))
+                if (food.getCategory().equals(sort) || food.getAuxdata().getType().equals(sort))
                     sorted.add(food);
             }
         }
@@ -114,5 +105,13 @@ public class HomeFragment extends Fragment implements JsonTask.JsonTaskListener,
         Intent intent = new Intent(this.getContext(), DetailActivity.class);
         intent.putExtra("food", food);
         startActivity(intent);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        String[] options = getResources().getStringArray(R.array.sort_options);
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(this.getContext(), R.layout.dropdown_item, options);
+        sortBox.setAdapter(arrayAdapter);
     }
 }

@@ -24,7 +24,6 @@ import java.util.List;
 
 public class FavoritesFragment extends Fragment implements SelectListener {
 
-    private RecyclerView recyclerView;
     private FoodAdapter adapter;
     private List<Food> favorites = new ArrayList<>();
     private TextView tv_info;
@@ -40,8 +39,8 @@ public class FavoritesFragment extends Fragment implements SelectListener {
         FavoritesHelper helper = new FavoritesHelper(this.getContext());
         favorites = helper.getAll();
 
-        recyclerView = view.findViewById(R.id.favorites_recyclerView);
-        adapter = new FoodAdapter(favorites, this::onItemClicked);
+        RecyclerView recyclerView = view.findViewById(R.id.favorites_recyclerView);
+        adapter = new FoodAdapter(favorites, this);
         adapter.setFoods(favorites);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));

@@ -33,6 +33,7 @@ public class DetailActivity extends AppCompatActivity {
         TextView name = findViewById(R.id.detail_name);
         TextView price = findViewById(R.id.detail_price);
         TextView description = findViewById(R.id.detail_description);
+        TextView size = findViewById(R.id.tv_size);
         ImageView image = findViewById(R.id.detail_image);
         Button addToCart = findViewById(R.id.add_to_cart);
         ImageButton addToFavorites = findViewById(R.id.add_to_favorites);
@@ -62,6 +63,7 @@ public class DetailActivity extends AppCompatActivity {
         name.setText(food.getName());
         price.setText(food.getCost() + " kr");
         description.setText(food.getAuxdata().getDescription());
+        size.setText("Size: " + food.getSize() + " " + (food.getCategory().equals("Food") ? "g" : "cl"));
 
         String url = food.getAuxdata().getImg();
 
