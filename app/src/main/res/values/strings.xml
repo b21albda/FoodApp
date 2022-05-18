@@ -22,5 +22,7 @@
         <item>Wine</item>
         <item>Beer</item>
         <item>Meat</item>
+        <item>Fish</item>
+        <item>Chicken</item>
     </string-array>
 </resources>
