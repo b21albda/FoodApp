@@ -1,6 +1,7 @@
 package com.example.foodapp.fragments;
 
 import android.content.Intent;
+import android.content.res.Resources;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -27,6 +28,8 @@ public class CartFragment extends Fragment implements CartAdapter.itemDeleteList
     private CartAdapter adapter;
     private TextView tv_total;
     private CartHelper cartHelper;
+    private Resources res;
+    private TextView tv_info;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -35,10 +38,11 @@ public class CartFragment extends Fragment implements CartAdapter.itemDeleteList
         View view = inflater.inflate(R.layout.fragment_cart, container, false);
 
         cartHelper = new CartHelper(this.getContext());
+        res = getResources();
 
+        tv_info = view.findViewById(R.id.tv_info_cart);
         if (cartHelper.getCount() == 0) {
-            TextView tv_info = view.findViewById(R.id.tv_info_cart);
-            tv_info.setText("Cart Empty");
+            tv_info.setText(res.getString(R.string.empty_cart));
         }
 
         RecyclerView recyclerView = view.findViewById(R.id.cart_recyclerView);
@@ -51,7 +55,7 @@ public class CartFragment extends Fragment implements CartAdapter.itemDeleteList
         tv_total = view.findViewById(R.id.tv_total);
         Button btn = view.findViewById(R.id.btn_order);
 
-        tv_total.setText("Total: " + cartHelper.getTotal() + " Kr");
+        tv_total.setText(res.getString(R.string.cart_total, cartHelper.getTotal()));
 
         btn.setOnClickListener(View -> {
             if (cartHelper.getCount() > 0) {
@@ -67,16 +71,18 @@ public class CartFragment extends Fragment implements CartAdapter.itemDeleteList
 
     @Override
     public void onResume() {
+        super.onResume();
         cartList = cartHelper.getAll();
         adapter.setFoods(cartList);
         adapter.notifyDataSetChanged();
         onItemDelete(cartHelper.getTotal());
-
-        super.onResume();
     }
 
     @Override
     public void onItemDelete(double price) {
-        tv_total.setText("Total: " + price + " Kr");
+        if (cartHelper.getCount() == 0) {
+            tv_info.setText(res.getString(R.string.empty_cart));
+        }
+        tv_total.setText(res.getString(R.string.cart_total, price));
     }
 }

@@ -1,5 +1,6 @@
 package com.example.foodapp.activities;
 
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.Button;
@@ -45,7 +46,6 @@ public class DetailActivity extends AppCompatActivity {
 
         addToCart.setOnClickListener(View -> {
             CartHelper cartHelper = new CartHelper(this);
-
             cartHelper.insert(food);
         });
 
@@ -60,13 +60,15 @@ public class DetailActivity extends AppCompatActivity {
             }
         });
 
+        Resources res = getResources();
         name.setText(food.getName());
-        price.setText(food.getCost() + " kr");
+        price.setText(res.getString(R.string.price, food.getCost()));
         description.setText(food.getAuxdata().getDescription());
-        size.setText("Size: " + food.getSize() + " " + (food.getCategory().equals("Food") ? "g" : "cl"));
+
+        String unit = food.getCategory().equals("Food") ? "g" : "cl";
+        size.setText(res.getString(R.string.size, food.getSize(), unit));
 
         String url = food.getAuxdata().getImg();
-
         if (!url.isEmpty())
             Picasso.get().load(url).into(image);
     }

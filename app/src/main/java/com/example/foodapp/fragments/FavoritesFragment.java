@@ -2,19 +2,18 @@ package com.example.foodapp.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.example.foodapp.activities.DetailActivity;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.example.foodapp.R;
 import com.example.foodapp.SelectListener;
+import com.example.foodapp.activities.DetailActivity;
 import com.example.foodapp.adapters.FoodAdapter;
 import com.example.foodapp.data.Food;
 import com.example.foodapp.database.FavoritesHelper;
@@ -46,7 +45,7 @@ public class FavoritesFragment extends Fragment implements SelectListener {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         if (adapter.getItemCount() == 0)
-            tv_info.setText("No favorites yet");
+            tv_info.setText(getResources().getString(R.string.empty_favorites));
 
         return view;
     }
@@ -59,7 +58,7 @@ public class FavoritesFragment extends Fragment implements SelectListener {
         adapter.notifyDataSetChanged();
 
         if (adapter.getItemCount() == 0)
-            tv_info.setText("No favorites yet");
+            tv_info.setText(getResources().getString(R.string.empty_favorites));
 
         super.onResume();
     }

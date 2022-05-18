@@ -38,7 +38,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Food food = foods.get(position);
         holder.tv_name.setText(food.getName());
-        holder.tv_price.setText(food.getCost() + " Kr");
+        holder.tv_price.setText(holder.itemView.getResources().getString(R.string.price, food.getCost()));
         String url = food.getAuxdata().getImg();
         if (!url.isEmpty())
             Picasso.get().load(url).into(holder.iv_product);
@@ -46,7 +46,6 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
         holder.btn_delete.setOnClickListener(view -> {
             foods.remove(food);
             cartHelper.delete(String.valueOf(food.getDbId()));
-
             listener.onItemDelete(cartHelper.getTotal());
             this.notifyDataSetChanged();
         });

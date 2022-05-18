@@ -1,5 +1,20 @@
 <resources>
     <string name="app_name">FoodApp</string>
+    <string name="price">%1$d kr</string>
+    <string name="size">Size: %1$d %2$s</string>
+    <string name="empty_cart">Cart empty!</string>
+    <string name="cart_total">Total: %1$.1f kr</string>
+    <string name="empty_favorites">No favorites yet</string>
+    <string name="add_to_cart">Add to cart</string>
+    <string name="confirm">Confirm</string>
+    <string name="order_process_text">Your order is being prepared</string>
+    <string name="order_thanks">Thank you for your order!</string>
+    <string name="order_btn">Order</string>
+    <string name="home_title">Home</string>
+    <string name="favorites_title">Favorites</string>
+    <string name="cart_title">Cart</string>
+    <string name="about_title">About</string>
+    <string name="order_placed">Order placed</string>
     <string-array name="sort_options" >
         <item>Sort by</item>
         <item>Food</item>

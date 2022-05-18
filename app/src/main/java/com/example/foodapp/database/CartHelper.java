@@ -89,26 +89,6 @@ public class CartHelper extends SQLiteOpenHelper {
     }
 
     /**
-     * Check if the database contains a record with a specific id
-     *
-     * @param id The id
-     * @return If the record exists
-     */
-    public boolean exists(String id) {
-        SQLiteDatabase db = getReadableDatabase();
-
-        String[] columns = {DatabaseTables.CART.COLUMN_NAME_ID};
-        String selection = DatabaseTables.CART.COLUMN_NAME_ID + " =?";
-        String[] selectionArgs = { id };
-        String limit = "1";
-
-        Cursor cursor = db.query(DatabaseTables.CART.TABLE_NAME, columns, selection, selectionArgs, null, null, null, limit);
-        boolean exists = (cursor.getCount() > 0);
-        cursor.close();
-        return exists;
-    }
-
-    /**
      * Delete a record from the database
      *
      * @param id The id of the record to be deleted
@@ -122,6 +102,11 @@ public class CartHelper extends SQLiteOpenHelper {
         db.delete(DatabaseTables.CART.TABLE_NAME, selection, selectionArgs);
     }
 
+    /**
+     * Get the total price of the items in the cart
+     *
+     * @return The total
+     */
     public double getTotal() {
         SQLiteDatabase db = getReadableDatabase();
 
@@ -142,6 +127,11 @@ public class CartHelper extends SQLiteOpenHelper {
         return amount;
     }
 
+    /**
+     * Get the count of items in the database
+     *
+     * @return The count
+     */
     public int getCount() {
         SQLiteDatabase db = getReadableDatabase();
         String query = "SELECT COUNT(" + DatabaseTables.CART.COLUMN_NAME_ID + ") FROM " + DatabaseTables.CART.TABLE_NAME;
@@ -160,6 +150,9 @@ public class CartHelper extends SQLiteOpenHelper {
         return amount;
     }
 
+    /**
+     * Clear the cart table
+     */
     public void clear() {
         SQLiteDatabase db = getWritableDatabase();
 

@@ -36,7 +36,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         Intent intent = new Intent(this, AboutActivity.class);
-
         startActivity(intent);
 
         return super.onOptionsItemSelected(item);

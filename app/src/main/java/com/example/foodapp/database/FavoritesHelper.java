@@ -43,7 +43,6 @@ public class FavoritesHelper extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
         Auxdata auxdata = food.getAuxdata();
 
-
         values.put(DatabaseTables.FAVORITES.COLUMN_NAME_ID, food.getID());
         values.put(DatabaseTables.FAVORITES.COLUMN_NAME_NAME, food.getName());
         values.put(DatabaseTables.FAVORITES.COLUMN_NAME_SIZE, food.getSize());

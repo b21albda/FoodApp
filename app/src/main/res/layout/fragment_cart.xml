@@ -33,8 +33,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             android:layout_marginStart="15dp"
-            android:textSize="30sp"
-            android:text="Total: 200 Kr"/>
+            android:textSize="30sp" />
 
         <Button
             android:id="@+id/btn_order"
@@ -44,7 +43,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             android:layout_marginEnd="15dp"
-            android:text="Order" />
+            android:text="@string/order_btn" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
