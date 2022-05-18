@@ -38,7 +38,7 @@ public class CartHelper extends SQLiteOpenHelper {
      *
      * @param food The object
      */
-    public void insert(Food food) {
+    public long insert(Food food) {
         SQLiteDatabase db = getWritableDatabase();
         ContentValues values = new ContentValues();
         Auxdata auxdata = food.getAuxdata();
@@ -52,7 +52,7 @@ public class CartHelper extends SQLiteOpenHelper {
         values.put(DatabaseTables.CART.COLUMN_NAME_IMG, auxdata.getImg());
         values.put(DatabaseTables.CART.COLUMN_NAME_TYPE, auxdata.getType());
 
-        db.insert(DatabaseTables.CART.TABLE_NAME, null, values);
+        return db.insert(DatabaseTables.CART.TABLE_NAME, null, values);
     }
 
     /**

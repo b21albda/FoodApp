@@ -7,6 +7,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -45,8 +46,16 @@ public class DetailActivity extends AppCompatActivity {
             addToFavorites.setImageResource(R.drawable.ic_favorites_fill);
 
         addToCart.setOnClickListener(View -> {
+            Toast toast = Toast.makeText(getApplicationContext(),
+                    "Item added to cart",
+                    Toast.LENGTH_SHORT);
             CartHelper cartHelper = new CartHelper(this);
-            cartHelper.insert(food);
+            if (cartHelper.insert(food) == -1) {
+                toast.setText("Something went wrong");
+            }
+
+            // Display toast to show a item has been added
+            toast.show();
         });
 
         addToFavorites.setOnClickListener(View -> {
