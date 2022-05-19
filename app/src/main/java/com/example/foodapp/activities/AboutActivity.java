@@ -4,6 +4,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 
 import com.example.foodapp.R;
 
@@ -16,6 +18,11 @@ public class AboutActivity extends AppCompatActivity {
 
         getSupportActionBar().setTitle(getResources().getString(R.string.about_title));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        WebView webView = findViewById(R.id.about_web_view);
+        webView.setWebViewClient(new WebViewClient());
+
+        webView.loadUrl("file:///android_asset/about.html");
     }
 
     @Override
