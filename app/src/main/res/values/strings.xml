@@ -15,8 +15,9 @@
     <string name="cart_title">Cart</string>
     <string name="about_title">About</string>
     <string name="order_placed">Order placed</string>
+    <string name="sort_text">Sort by</string>
     <string-array name="sort_options" >
-        <item>Sort by</item>
+        <item>@string/sort_text</item>
         <item>Food</item>
         <item>Beverage</item>
         <item>Wine</item>
