@@ -4,7 +4,7 @@
 Skapade en app för att beställa mat och dryck. I appen använde jag mig av fragments för att skapa huvudlayout, dvs ett fragment för varje tab. Ett Homefragment, favoritesfragment och cartfragment.
 Favorites och cart bygger på mer eller mindre samma grund, båda använde sig av en databas för att spara det användaren har lagt till. Skillnade är vad som visas i fragmentet.
 
-#### Hämta data från datbas
+#### Hämta data från databas
 För att skapa en varukorg så användes den lokala databasen för att lagra varorna. Nedanstående kodstycke är metoden som hämtar alla
 varorna. Då data bara ska läsas från databasen här och inget ska skrivas används det en readable anslutning till databasen.
 Datan som hämtas stegas igenom och för varje rad skapas det ett nytt food objekt som sedan läggs till i en lista som slutligen returneras
@@ -68,7 +68,7 @@ Jag var tvungen att lägga till lite extra data i auxdata för att få med en li
 
 #### Detaljvyn
 För att få upp en detaljvy behövdes två saker göras, dels var man tvungen att kunna klicka på det item som man ville se samt att datan om det itemet var tvunget att skickas med till den nya aktiviteten.
-För att lösa så att man kunde klicka på ett item skapade jag ett interface med en metod (`onItemClicked`) som MainActivity sedan implementerade. När adaptern sedan skapar en viewholder satte jag en listener på hela viewholder.
+För att lösa så att man kunde klicka på ett item skapade jag ett interface med en metod `onItemClicked` som MainActivity sedan implementerade. När adaptern sedan skapar en viewholder satte jag en listener på hela viewholder.
 När ett item blir klickat på anropas `onItemClicked()`.
 
 Nedanstående kodstycke visar implementationen av `onItemClicked()`. Metoden tar in ett food item vilket är det item som blev klickat på. En intent skapas till detalj aktiviteten och itemet skickas med som en extra.
@@ -115,3 +115,7 @@ private void sortBy(String sort) {
 
 
 ![](Sort.png)
+
+
+#### Skiss
+![](skiss.jpg)
